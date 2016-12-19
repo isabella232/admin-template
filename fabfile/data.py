@@ -16,6 +16,8 @@ def bootstrap_db():
     """
     create_db()
     create_tables()
+    load_stub_data()
+
 
 @task
 def create_db():
@@ -42,3 +44,7 @@ def create_db():
 def create_tables():
     models.TestModel.create_table()
 
+@task
+def load_stub_data():
+    with shell_env(**app_config.DATABASE):
+        local('psql %s -c "COPY testmodel from \'`pwd`/data/test.csv\' DELIMITER\',\' CSV HEADER"' % app_config.DATABASE['PGDATABASE'])

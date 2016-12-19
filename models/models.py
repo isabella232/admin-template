@@ -28,5 +28,4 @@ class BaseModel(Model):
 class TestModel(BaseModel):
     id = CharField(primary_key=True)
     name = CharField()
-    birthday = DateField()
-    ranking = IntegerField()
+    job = CharField()

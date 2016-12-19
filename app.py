@@ -17,7 +17,7 @@ from werkzeug.debug import DebuggedApplication
 app = Flask(__name__)
 app.debug = app_config.DEBUG
 admin = Admin(app, name=app_config.PROJECT_SLUG)
-admin.add_view(ModelView(models.TestModelpi))
+admin.add_view(ModelView(models.TestModel))
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
