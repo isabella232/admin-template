@@ -1,6 +1,7 @@
 Authomatic==0.1.0.post1
 Fabric==1.12.0
 Flask==0.9
+Flask-Admin==1.4.2
 Jinja2==2.7.3
 MarkupSafe==0.23
 PyYAML==3.11
@@ -17,10 +18,13 @@ jmespath==0.2.1
 nose==1.2.1
 odict==1.5.1
 openpyxl==2.2.0
+peewee==2.8.5
 ply==3.4
+psycopg2==2.6.2
 pyasn1==0.1.7
 pycrypto==2.6
 python-dateutil==2.2
+python-slugify==1.2.1
 requests==2.5.0
 six==1.5.2
 slimit==0.7.4
@@ -29,3 +33,4 @@ ssh==1.7.14
 termcolor==1.1.0
 wheel==0.23.0
 wsgiref==0.1.2
+wtf-peewee==0.2.6
