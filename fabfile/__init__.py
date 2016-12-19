@@ -111,12 +111,6 @@ Changes to deployment requires a full-stack test. Deployment
 has two primary functions: Pushing flat files to S3 and deploying
 code to a remote server if required.
 """
-@task
-def update():
-    """
-    Update all application data not in repository (copy, assets, etc).
-    """
-    data.update()
 
 @task
 def deploy(remote='origin', reload=False):
@@ -124,8 +118,6 @@ def deploy(remote='origin', reload=False):
     Deploy the latest app to S3 and, if configured, to our servers.
     """
     require('settings', provided_by=[production, staging])
-
-    update()
 
     if app_config.DEPLOY_TO_SERVERS:
         require('branch', provided_by=[stable, master, branch])
@@ -136,10 +128,6 @@ def deploy(remote='origin', reload=False):
             )
 
         servers.checkout_latest(remote)
-
-        servers.fabcast('text.update')
-        servers.fabcast('assets.sync')
-        servers.fabcast('data.update')
 
         if app_config.DEPLOY_SERVICES:
             servers.deploy_confs()
