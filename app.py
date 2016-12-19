@@ -4,6 +4,7 @@ import app_config
 import datetime
 import json
 import logging
+import oauth
 import static
 
 from flask import Flask, make_response, render_template
@@ -27,6 +28,7 @@ except IOError:
 app.logger.setLevel(logging.INFO)
 
 app.register_blueprint(static.static, url_prefix='/%s' % app_config.PROJECT_SLUG)
+app.register_blueprint(oauth.oauth, url_prefix='/%s' % app_config.PROJECT_SLUG)
 
 app.add_template_filter(smarty_filter, name='smarty')
 app.add_template_filter(urlencode_filter, name='urlencode')
@@ -43,14 +45,12 @@ def _test_app():
 
 # Example of rendering index.html with public_app
 @app.route ('/%s/' % app_config.PROJECT_SLUG, methods=['GET'])
+@oauth.oauth_required
 def index():
     """
     Example view rendering a simple page.
     """
     context = make_context(asset_depth=1)
-
-    with open('data/featured.json') as f:
-        context['featured'] = json.load(f)
 
     return make_response(render_template('index.html', **context))
 

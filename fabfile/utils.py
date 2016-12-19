@@ -38,27 +38,3 @@ def get_bucket(bucket_name):
         s3 = boto.connect_s3()
 
     return s3.get_bucket(bucket_name)
-
-@task
-def install_font(force='true'):
-    """
-    Install font
-    """
-    print 'Installing font'
-    if force != 'true':
-        try:
-            with open('www/css/icon/npr-app-template.css') and open('www/css/font/npr-app-template.svg'):
-                logger.info('Font installed, skipping.')
-                return
-        except IOError:
-            pass
-
-    local('node_modules/fontello-cli/bin/fontello-cli install --config fontello/config.json --css www/css/icon --font www/css/font/')
-
-
-@task
-def open_font():
-    """
-    Open font in Fontello GUI in your browser
-    """
-    local('node_modules/fontello-cli/bin/fontello-cli open --config fontello/config.json')
