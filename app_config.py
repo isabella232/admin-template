@@ -134,6 +134,20 @@ def configure_targets(deployment_target):
     global DEBUG
     global DEPLOYMENT_TARGET
     global LOG_LEVEL
+    global DATABASE
+
+    secrets = get_secrets()
+
+    """
+    Database
+    """
+    DATABASE = {
+        'PGDATABASE': PROJECT_FILENAME,
+        'PGUSER': secrets.get('POSTGRES_USER', PROJECT_FILENAME),
+        'PGPASSWORD': secrets.get('POSTGRES_PASSWORD', PROJECT_FILENAME),
+        'PGHOST': secrets.get('POSTGRES_HOST', 'localhost'),
+        'PGPORT': secrets.get('POSTGRES_PORT', '5432')
+    }
 
     if deployment_target == 'production':
         SERVERS = PRODUCTION_SERVERS

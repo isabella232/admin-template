@@ -8,11 +8,16 @@ import oauth
 import static
 
 from flask import Flask, make_response, render_template
+from flask_admin import Admin
+from flask_admin.contrib.peewee import ModelView
+from models import models
 from render_utils import make_context, smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
+admin = Admin(app, name=app_config.PROJECT_SLUG)
+admin.add_view(ModelView(models.TestModelpi))
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
@@ -32,16 +37,6 @@ app.register_blueprint(oauth.oauth, url_prefix='/%s' % app_config.PROJECT_SLUG)
 
 app.add_template_filter(smarty_filter, name='smarty')
 app.add_template_filter(urlencode_filter, name='urlencode')
-
-# Example application views
-@app.route('/%s/test/' % app_config.PROJECT_SLUG, methods=['GET'])
-def _test_app():
-    """
-    Test route for verifying the application is running.
-    """
-    app.logger.info('Test URL requested.')
-
-    return make_response(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 # Example of rendering index.html with public_app
 @app.route ('/%s/' % app_config.PROJECT_SLUG, methods=['GET'])
