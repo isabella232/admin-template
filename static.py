@@ -47,10 +47,10 @@ def _copy_js():
     return make_response(copy, 200, { 'Content-Type': 'application/javascript' })
 
 # Server arbitrary static files on-demand
-@static.route('/<path:path>')
+@static.route('/js/<path:path>')
 def _static(path):
     try:
-        with open('www/%s' % path) as f:
+        with open('js/%s' % path) as f:
             return make_response(f.read(), 200, { 'Content-Type': guess_type(path)[0] })
     except IOError:
         abort(404)
